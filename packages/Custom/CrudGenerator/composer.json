@@ -1,0 +1,22 @@
+{
+    "name": "custom/crud-generator",
+    "description": "A Laravel package to generate complete CRUD operations",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Custom\\CrudGenerator\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Custom\\CrudGenerator\\CrudGeneratorServiceProvider"
+            ]
+        }
+    }
+}
