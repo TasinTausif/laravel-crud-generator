@@ -6,7 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-// CRUD Route for Product
-use App\Http\Controllers\ProductController;
-Route::resource('product', ProductController::class);
+// CRUD Route for Foods
+use App\Http\Controllers\FoodsController;
+Route::resource('foods', FoodsController::class)->parameters(['foods' => 'foods']);
