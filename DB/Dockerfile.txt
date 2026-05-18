@@ -1,0 +1,5 @@
+# Base Layer
+FROM mysql:8.0
+
+# Default port MySQL listens on
+EXPOSE 3306
