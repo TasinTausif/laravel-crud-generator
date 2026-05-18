@@ -1,0 +1,38 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '8000:8000'
+        # If any change is made in the source code or vendor directory, it will be reflected inside the container without needing to rebuild the image.
+        volumes:
+            - ./:/var/www/html
+            - vendor_data:/var/www/html/vendor
+        environment:
+            DB_CONNECTION: mysql
+            DB_HOST: ${DB_HOST}
+            DB_PORT: ${DB_PORT}
+            DB_DATABASE: ${DB_DATABASE}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
+        depends_on:
+            - mysql
+
+    mysql:
+        build:
+            context: ./DB
+            dockerfile: Dockerfile
+        ports:
+            - '3307:3306'
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_HOST: '%'
+            # tells MySQL to allow root login from any host, not just localhost inside the container.
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+volumes:
+    mysql_data:
+    vendor_data:

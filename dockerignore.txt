@@ -1,0 +1,48 @@
+# Dependencies
+/vendor
+/node_modules
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Cache & Compiled
+bootstrap/cache/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+
+# Testing
+/tests
+phpunit.xml
+.phpunit.result.cache
+
+# Build artifacts
+/public/hot
+/public/build
+
+# Dev tools & config
+.editorconfig
+.php-cs-fixer.php
+.phpstan.neon
+phpstan.neon
+.DS_Store
+Thumbs.db
+
+# Docker files themselves
+docker-compose.yaml
+docker-compose.yml
+Dockerfile
+.dockerignore
+mysql/
+
+# Docs
+*.md
+LICENSE

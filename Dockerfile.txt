@@ -1,0 +1,34 @@
+FROM php:8.2-cli
+
+RUN apt-get update && apt-get install -y \
+    zip \
+    unzip \
+    && docker-php-ext-install pdo pdo_mysql
+
+# Copying composer from composer:latest image's /usr/bin/composer to our image's /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copying composer.json and composer.lock to the working directory
+COPY composer.json composer.lock ./
+
+# Copying the packages directory to the working directory
+COPY packages/ packages/
+
+# Skip post-install scripts because artisan doesn't exist yet at this stage
+RUN composer install --no-scripts
+
+# Copy the rest of the source files (including artisan)
+COPY . .
+
+# Now run the post-install scripts since artisan is available
+RUN composer run-script post-autoload-dump
+
+# Give Laravel write access to storage and cache
+RUN chmod -R 775 storage bootstrap/cache
+
+EXPOSE 8000
+
+# By default Laravel listens to localhost(127.0.0.1) only. With host set to 0.0.0.0 it will listen to all the networks, allowing us to access the application from outside the container.
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
